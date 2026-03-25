@@ -10,6 +10,6 @@ vehicles = db.query(models.Vehicle).all()
 
 # Print nicely
 for v in vehicles:
-    print(f"ID: {v.id}, Brand: {v.brand}, Model: {v.model}, Mileage: {v.mileage}")
+    print(f"ID: {v.id}, Brand: {v.brand}, Model: {v.model}, Mileage: {v.mileage}, Registration: {v.registration_date}")
 
 db.close()
