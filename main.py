@@ -93,23 +93,19 @@ def update_service_records(service_id: str, service_record_update: schema.Servic
 
 @app.get("/vehicles/model/{model}", response_model=list[schema.VehicleWithService])
 def get_details(model: str, db: Session = Depends(get_db)):
-
-    results = (
-        db.query(models.Vehicle, models.ServiceRecord)
-        .join(
-            models.ServiceRecord,
-            models.Vehicle.id == models.ServiceRecord.vehicle_id
-        )
-        .filter(models.Vehicle.model == model)
-        .all()
-    )
+    vehicles = db.query(models.Vehicle).filter(models.Vehicle.model == model).all()
 
     response = []
 
-    for vehicle, service in results:
+    for vehicle in vehicles:
+        # Get service records for this vehicle (can be zero)
+        services = db.query(models.ServiceRecord).filter(
+            models.ServiceRecord.vehicle_id == vehicle.id
+        ).all()
+
         response.append({
             "vehicle": vehicle,
-            "service_records": [service]   # ← MUST be plural
+            "service_records": services  # empty list if none
         })
 
     return response

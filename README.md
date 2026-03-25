@@ -170,6 +170,14 @@ PUT /service records/{service_id}
 ```
 
 ---
+
+## Get Details based on Car Model
+
+```
+Get /model/{model}
+```
+
+---
 # 🧠 Pydantic Features Used
 
 This project demonstrates:
