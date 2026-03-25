@@ -38,6 +38,7 @@ vehicle-service-tracker/
 ├── database.py
 ├── models.py
 ├── schemas.py
+├── view.py
 ├── requirements.txt
 └── README.md
 ```
@@ -128,7 +129,47 @@ GET /vehicles
 ```
 
 ---
+## Update Vehicles
 
+```
+PUT  /vehicles /{vehicle_id}
+```
+
+---
+## Add Service Records
+
+```
+POST /service records
+```
+
+### Request
+
+```json
+{
+  "service_type": "Paint",
+  "service_date": "2026-01-01T12:56:26.372Z",
+  "mileage": 54,
+  "next_service_due": "2026-03-25T12:56:26.372Z",
+  "vehicle_id": "8208b6f2-c765-4520-ac83-b91bdc9bb763"
+}
+```
+
+---
+
+## Get All service records
+
+```
+GET /service records
+```
+
+---
+## Update  service records
+
+```
+PUT /service records/{service_id}
+```
+
+---
 # 🧠 Pydantic Features Used
 
 This project demonstrates:
@@ -181,13 +222,11 @@ No installation required.
 
 # 🔮 Future Improvements
 
-* Add service history
 * Add service reminders
 * Add vehicle owners
 * Add maintenance alerts
 * Add authentication
 * Add pagination
-* Add filtering
 
 ---
 

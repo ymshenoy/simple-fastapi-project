@@ -91,4 +91,25 @@ def update_service_records(service_id: str, service_record_update: schema.Servic
     db.refresh(db_record)
     return db_record
 
-###give a notification when the service is due
+@app.get("/vehicles/model/{model}", response_model=list[schema.VehicleWithService])
+def get_details(model: str, db: Session = Depends(get_db)):
+
+    results = (
+        db.query(models.Vehicle, models.ServiceRecord)
+        .join(
+            models.ServiceRecord,
+            models.Vehicle.id == models.ServiceRecord.vehicle_id
+        )
+        .filter(models.Vehicle.model == model)
+        .all()
+    )
+
+    response = []
+
+    for vehicle, service in results:
+        response.append({
+            "vehicle": vehicle,
+            "service_records": [service]   # ← MUST be plural
+        })
+
+    return response

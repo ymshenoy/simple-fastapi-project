@@ -50,3 +50,10 @@ class ServiceRecordResponse(ServiceRecordBase):
 
     class Config:
         from_attributes = True
+
+class VehicleWithService(BaseModel):
+    vehicle: VehicleResponse
+    service_records: list[ServiceRecordResponse]
+
+    class Config:
+        from_attributes = True
