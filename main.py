@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 import models
@@ -69,8 +69,11 @@ def add_service(record: schema.ServiceRecordCreate, db: Session = Depends(get_db
     return db_record
 
 @app.get("/service", response_model=list[schema.ServiceRecordResponse])
-def get_service_records(db: Session = Depends(get_db)):
-    return db.query(models.ServiceRecord).all()
+def get_service_records(vehicle_id: str | None = Query(None), db: Session = Depends(get_db)):
+    query = db.query(models.ServiceRecord)
+    if vehicle_id:
+        query = query.filter(models.ServiceRecord.vehicle_id == vehicle_id)
+    return query.all()
 
 ###Update the service record
 @app.put("/service/{service_id}", response_model=schema.ServiceRecordResponse)
